@@ -32,6 +32,9 @@ def predict():
         "prediction": prediction,
         "probability": probability
     })
+@app.route("/routes")
+def routes():
+    return str(app.url_map)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
