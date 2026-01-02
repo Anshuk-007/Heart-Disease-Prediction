@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 
-clf = joblib.load("heart_disease_model.joblib")
+model = joblib.load("heart_disease_model.joblib")
 
 FEATURES = [
     "age", "sex", "cp", "trestbps", "chol", "fbs",
@@ -13,21 +13,20 @@ FEATURES = [
     "slope", "ca", "thal"
 ]
 
-def predict_heart_disease(input_data):
-    df = pd.DataFrame([input_data], columns=FEATURES)
-    pred = clf.predict(df)[0]
-    prob = clf.predict_proba(df)[0][1]
-    return int(pred), float(prob)
-
-@app.route("/")
+@app.route("/", methods=["GET"])
 def home():
-    return "API running"
+    return "Heart Disease Prediction API is running"
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    data = request.json
+    data = request.get_json()
 
-    prediction, probability = predict_heart_disease(data)
+    if not data:
+        return jsonify({"error": "No JSON data provided"}), 400
+
+    df = pd.DataFrame([data], columns=FEATURES)
+    prediction = int(model.predict(df)[0])
+    probability = float(model.predict_proba(df)[0][1])
 
     return jsonify({
         "prediction": prediction,
@@ -35,5 +34,5 @@ def predict():
     })
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
