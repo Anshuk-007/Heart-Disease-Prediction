@@ -23,7 +23,8 @@ def predict_heart_disease(input_data):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return "API running"
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
