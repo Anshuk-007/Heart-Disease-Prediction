@@ -25,22 +25,24 @@ def predict():
     try:
         data = request.get_json()
         
-        # Convert incoming JSON to DataFrame
-        df = pd.DataFrame([data], columns=FEATURES)
+        # 1. Ensure all values are converted to float/int to match notebook precision
+        # This prevents string-to-number errors that change confidence scores
+        numeric_data = {k: float(v) for k, v in data.items()}
         
-        # Get prediction (0 or 1)
+        # 2. Force the DataFrame to use the EXACT column order from your notebook
+        # Using [FEATURES] at the end ensures the data aligns with the model's expectations
+        df = pd.DataFrame([numeric_data])[FEATURES]
+        
+        # 3. Get prediction and probability
         pred = int(clf.predict(df)[0])
-        
-        # Get probability (confidence)
-        # predict_proba returns a list of lists: [[prob_0, prob_1]]
-        # We take prob_1 (the chance of having heart disease)
         prob = float(clf.predict_proba(df)[0][1])
 
         return jsonify({
             "prediction": pred,
-            "probability": prob  # We will map this to 'confidence' in the frontend
+            "probability": prob
         })
     except Exception as e:
+        print(f"Prediction Error: {e}") # Log the error to your terminal
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
