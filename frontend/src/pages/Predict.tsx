@@ -120,17 +120,21 @@ const Predict = () => {
         <div className="mb-8">
           <Link
             to="/"
-            className="inline-flex items-center text-orange-700 hover:text-orange-900 mb-4 font-medium"
+            className="inline-flex items-center text-orange-700 hover:text-orange-900 mb-4 font-medium transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Link>
+  
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center shadow-lg shadow-orange-200">
-              <Heart className="w-6 h-6 text-white" />
+            {/* This is the container for the heart symbol */}
+            <div className="w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center shadow-lg shadow-orange-200 ring-4 ring-orange-50">
+              {/* Ensure the Heart icon itself is white so it pops against the orange bg */}
+              <Heart className="w-6 h-6 text-white fill-white" /> 
             </div>
+    
             <div>
-              <h1 className="text-3xl font-bold text-slate-900">
+              <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
                 Heart Disease Prediction
               </h1>
               <p className="text-orange-800/70 font-medium">
