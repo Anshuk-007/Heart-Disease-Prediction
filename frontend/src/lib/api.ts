@@ -1,26 +1,15 @@
 export type PredictionInput = {
-  age: number;
-  sex: number;
-  cp: number;
-  trestbps: number;
-  chol: number;
-  fbs: number;
-  restecg: number;
-  thalach: number;
-  exang: number;
-  oldpeak: number;
-  slope: number;
-  ca: number;
-  thal: number;
+  age: number; sex: number; cp: number; trestbps: number; 
+  chol: number; fbs: number; restecg: number; thalach: number; 
+  exang: number; oldpeak: number; slope: number; ca: number; thal: number;
 };
 
 export const getPrediction = async (data: PredictionInput) => {
-  // IMPORTANT: Replace the URL below with your ACTUAL Render Backend URL
-  // Example: "https://heart-disease-api-xyz.onrender.com"
-  const BASE_URL = "https://your-backend-service-name.onrender.com";
+  // Use your actual backend URL from the screenshot
+  const BASE_URL = "https://heart-disease-prediction-backend-1ggb.onrender.com";
 
   const response = await fetch(`${BASE_URL}/predict`, {
-    method: "POST",
+    method: "POST", // This is the 'Method' the browser was missing
     headers: {
       "Content-Type": "application/json",
     },
@@ -34,7 +23,7 @@ export const getPrediction = async (data: PredictionInput) => {
 
   const result = await response.json();
   
-  // We map 'probability' from Python to 'confidence' for your React component
+  // Map 'probability' from Python to 'confidence' for your UI
   return {
     prediction: result.prediction,
     confidence: result.probability, 
