@@ -9,15 +9,32 @@
 /* 3. Your custom @layer base or other styles go at the bottom */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    /* ... rest of your shadcn variables ... */
-  }
+  --background: 30 40% 98%;      /* Warm Cream Background */
+  --foreground: 20 14% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14% 4%;
+  --primary: 24 95% 53%;         /* Warm Amber/Orange */
+  --primary-foreground: 60 9% 98%;
+  --secondary: 32 30% 92%;       /* Soft Sand */
+  --secondary-foreground: 24 9% 10%;
+  --muted: 30 20% 95%;
+  --muted-foreground: 25 5% 45%;
+  --accent: 30 90% 95%;
+  --accent-foreground: 24 95% 53%;
+  --border: 30 15% 85%;          /* Warmer Border */
+  --input: 30 15% 85%;
+  --ring: 24 95% 53%;
+  --radius: 0.75rem;
+}
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-  }
+  --background: 24 10% 6%;        /* Deep Cocoa Night */
+  --foreground: 60 9% 98%;
+  --primary: 24 95% 53%;
+  /* ... rest of dark mode ... */
+}
 }
 
 @layer base {
