@@ -11,8 +11,9 @@ const Landing = () => {
           {/* Floating Heart Icon */}
           <div className="mb-8 flex justify-center">
             <div className="relative">
+              {/* UPDATED: Changed text-primary-foreground to text-slate-900 to ensure visibility */}
               <div className="w-24 h-24 md:w-32 md:h-32 rounded-full gradient-warm flex items-center justify-center shadow-warm-lg animate-float">
-                <Heart className="w-12 h-12 md:w-16 md:h-16 text-primary-foreground" fill="currentColor" />
+                <Heart className="w-12 h-12 md:w-16 md:h-16 text-slate-900 fill-slate-900" />
               </div>
               <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center">
                 <Activity className="w-4 h-4 text-accent-foreground" />
