@@ -1,9 +1,4 @@
-// API configuration for Flask backend
-// Update this URL to point to your Flask server
-
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-export interface PredictionInput {
+export type PredictionInput = {
   age: number;
   sex: number;
   cp: number;
@@ -17,26 +12,31 @@ export interface PredictionInput {
   slope: number;
   ca: number;
   thal: number;
-}
+};
 
-export interface PredictionResponse {
-  prediction: number;
-  confidence?: number;
-  message?: string;
-}
+export const getPrediction = async (data: PredictionInput) => {
+  // IMPORTANT: Replace the URL below with your ACTUAL Render Backend URL
+  // Example: "https://heart-disease-api-xyz.onrender.com"
+  const BASE_URL = "https://your-backend-service-name.onrender.com";
 
-export async function getPrediction(input: PredictionInput): Promise<PredictionResponse> {
-  const response = await fetch(`${API_BASE_URL}/predict`, {
+  const response = await fetch(`${BASE_URL}/predict`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(input),
+    body: JSON.stringify(data),
   });
 
   if (!response.ok) {
-    throw new Error(`Prediction failed: ${response.statusText}`);
+    const errorData = await response.json();
+    throw new Error(errorData.error || "Failed to get prediction");
   }
 
-  return response.json();
-}
+  const result = await response.json();
+  
+  // We map 'probability' from Python to 'confidence' for your React component
+  return {
+    prediction: result.prediction,
+    confidence: result.probability, 
+  };
+};
