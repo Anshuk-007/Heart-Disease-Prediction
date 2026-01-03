@@ -418,10 +418,9 @@ const Predict = () => {
                     <SelectValue placeholder="Select result" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="0">Normal</SelectItem>
-                    <SelectItem value="1">Fixed Defect</SelectItem>
-                    <SelectItem value="2">Reversible Defect</SelectItem>
-                    <SelectItem value="3">Unknown</SelectItem>
+                    <SelectItem value="1">Normal</SelectItem>
+                    <SelectItem value="2">Fixed Defect</SelectItem>
+                    <SelectItem value="3">Reversible Defect</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
