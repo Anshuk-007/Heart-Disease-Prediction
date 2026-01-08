@@ -64,7 +64,7 @@ const Predict = () => {
       oldpeak: 0,
       slope: 0,
       ca: 0,
-      thal: 0,
+      thal: 3,
     },
   });
 
