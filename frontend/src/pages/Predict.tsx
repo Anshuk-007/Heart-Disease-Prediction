@@ -34,7 +34,8 @@ const predictionSchema = z.object({
   slope: z.coerce.number().min(0).max(2),
   ca: z.coerce.number().min(0).max(4),
   thal: z.coerce.number().refine(v => [3, 6, 7].includes(v), {
-  message: "Invalid thal value",}),
+    message: "Invalid thal value",
+  }),
 });
 
 type PredictionFormData = z.infer<typeof predictionSchema>;
@@ -414,7 +415,11 @@ const Predict = () => {
 
                 <Select
                   defaultValue="3"
-                  onValueChange={(value) => setValue("thal", parseInt(value))}
+                  onValueChange={(value) => setValue("thal", parseInt(value), {
+                    shouldValidate: true,
+                    shouldDirty: true,
+                  })
+                }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select result" />
