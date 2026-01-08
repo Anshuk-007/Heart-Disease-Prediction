@@ -33,7 +33,8 @@ const predictionSchema = z.object({
   oldpeak: z.coerce.number().min(0, "Value must be positive").max(10, "Value too high"),
   slope: z.coerce.number().min(0).max(2),
   ca: z.coerce.number().min(0).max(4),
-  thal: z.coerce.number().min(0).max(3),
+  thal: z.coerce.number().refine(v => [3, 6, 7].includes(v), {
+  message: "Invalid thal value",}),
 });
 
 type PredictionFormData = z.infer<typeof predictionSchema>;
