@@ -19,9 +19,6 @@ FEATURES = [
 @app.route("/", methods=["GET"])
 def home():
     return "Heart Disease Prediction API is Live"
-print("RAW DATA:", data)
-print("NUMERIC DATA:", numeric_data)
-print("DF:\n", df)
 
 
 @app.route("/predict", methods=["POST"])
@@ -43,8 +40,9 @@ def predict():
 
         return jsonify({
             "prediction": pred,
-            "probability": prob
+            "confidence": prob
         })
+
     except Exception as e:
         print(f"Prediction Error: {e}") # Log the error to your terminal
         return jsonify({"error": str(e)}), 500
