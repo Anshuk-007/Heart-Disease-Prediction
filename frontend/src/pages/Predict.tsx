@@ -408,23 +408,25 @@ const Predict = () => {
               <div className="space-y-2">
                 <Label htmlFor="thal" className="flex items-center">
                   Thalassemia
-                  <FormTooltip content="0: Normal, 1: Fixed defect, 2: Reversible defect" />
+                  <FormTooltip content="3: Normal, 6: Fixed defect, 7: Reversible defect" />
                 </Label>
+
                 <Select
-                  defaultValue="1"
+                  defaultValue="3"
                   onValueChange={(value) => setValue("thal", parseInt(value))}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select result" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0">Normal</SelectItem>
-                    <SelectItem value="1">Fixed Defect</SelectItem>
-                    <SelectItem value="2">Reversible Defect</SelectItem>
-                  </SelectContent>
 
+                  <SelectContent>
+                    <SelectItem value="3">Normal</SelectItem>
+                    <SelectItem value="6">Fixed Defect</SelectItem>
+                    <SelectItem value="7">Reversible Defect</SelectItem>
+                  </SelectContent>
                 </Select>
               </div>
+
             </CardContent>
           </Card>
 
