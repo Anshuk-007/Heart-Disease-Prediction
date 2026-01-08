@@ -19,6 +19,10 @@ FEATURES = [
 @app.route("/", methods=["GET"])
 def home():
     return "Heart Disease Prediction API is Live"
+print("RAW DATA:", data)
+print("NUMERIC DATA:", numeric_data)
+print("DF:\n", df)
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
