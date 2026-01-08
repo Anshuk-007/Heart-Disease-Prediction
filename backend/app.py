@@ -42,6 +42,10 @@ def predict():
             "prediction": pred,
             "confidence": prob
         })
+        
+        print("CLASSES:", clf.classes_)
+        print("PROBA:", clf.predict_proba(df))
+
 
     except Exception as e:
         print(f"Prediction Error: {e}") # Log the error to your terminal
