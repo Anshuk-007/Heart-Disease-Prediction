@@ -36,16 +36,20 @@ def predict():
         
         # 3. Get prediction and probability
         pred = int(clf.predict(df)[0])
-        prob = float(clf.predict_proba(df)[0][1])
+        proba = clf.predict_proba(df)
+
+        print("CLASSES:", clf.classes_)
+        print("PROBA:", proba)
+
+        disease_index = list(clf.classes_).index(1)
+        prob = float(proba[0][disease_index])
 
         return jsonify({
             "prediction": pred,
             "confidence": prob
         })
         
-        print("CLASSES:", clf.classes_)
-        print("PROBA:", clf.predict_proba(df))
-
+        
 
     except Exception as e:
         print(f"Prediction Error: {e}") # Log the error to your terminal
