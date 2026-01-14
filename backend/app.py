@@ -2,60 +2,49 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 import pandas as pd
-import numpy as np
-import os
 
 app = Flask(__name__)
 CORS(app)
 
 # Load the model
-# NOTE: If you used a scaler in your notebook, you MUST load it here too.
-# Example: scaler = joblib.load("scaler.joblib")
-clf = joblib.load("heart_disease_model.joblib")
+model = joblib.load('heart_disease_model.joblib')
 
-FEATURES = [
-    "age", "sex", "cp", "trestbps", "chol", "fbs",
-    "restecg", "thalach", "exang", "oldpeak",
-    "slope", "ca", "thal"
+# These are the 13 exact features from your notebook in order
+FEATURE_COLUMNS = [
+    'age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 
+    'restecg', 'thalach', 'exang', 'oldpeak', 
+    'slope', 'ca', 'thal'
 ]
 
-@app.route("/", methods=["GET"])
-def home():
-    return "Heart Disease Prediction API is Live"
-
-@app.route("/predict", methods=["POST"])
+@app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
         
-        # 1. Prepare Data
-        numeric_data = {k: float(v) for k, v in data.items()}
-        df = pd.DataFrame([numeric_data])[FEATURES]
+        # Convert incoming JSON into a DataFrame with correct column names
+        # This prevents the "mismatch" error
+        input_df = pd.DataFrame([data], columns=FEATURE_COLUMNS)
         
-        # CRITICAL: If your notebook used scaling, uncomment the lines below:
-        # df_scaled = scaler.transform(df)
-        # prediction_input = df_scaled
-        # ELSE (if no scaling was used):
-        prediction_input = df
+        # Ensure numeric types (floats/ints)
+        for col in FEATURE_COLUMNS:
+            input_df[col] = pd.to_numeric(input_df[col])
 
-        # 2. Get Prediction and Probability
-        pred = int(clf.predict(prediction_input)[0])
-        proba = clf.predict_proba(prediction_input)[0] # Get array like [0.1, 0.9]
+        # Logic from your notebook's predict_heart_disease function
+        prediction = model.predict(input_df)[0]
+        probability = model.predict_proba(input_df)[0][1] # Prob of positive class
 
-        # 3. FIX FOR CONFIDENCE SCORE
-        # Instead of always taking index 1, we take the max value (the winner)
-        confidence_score = float(np.max(proba)) 
-
+        # Formatting response to match your notebook's output
+        result = "Heart disease predicted" if prediction == 1 else "No heart disease predicted"
+        confidence = f"{probability*100:.0f}% confidence"
+        
         return jsonify({
-            "prediction": pred,
-            # Return percentage (e.g., 88.5 instead of 0.885)
-            "confidence": round(confidence_score * 100, 2) 
+            'prediction': int(prediction),
+            'result': result,
+            'confidence': confidence,
+            'status': 'success'
         })
-
     except Exception as e:
-        print(f"Prediction Error: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'error': str(e), 'status': 'error'}), 400
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)
