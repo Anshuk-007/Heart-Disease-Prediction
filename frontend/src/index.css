@@ -46,42 +46,42 @@
   }
 
   .dark {
-    --background: 20 30% 8%;
-    --foreground: 35 30% 95%;
+    --background: 20 20% 7%;
+    --foreground: 30 20% 90%;
 
-    --card: 20 25% 12%;
-    --card-foreground: 35 30% 95%;
+    --card: 20 18% 11%;
+    --card-foreground: 30 20% 90%;
 
-    --popover: 20 25% 12%;
-    --popover-foreground: 35 30% 95%;
+    --popover: 20 18% 11%;
+    --popover-foreground: 30 20% 90%;
 
-    --primary: 25 90% 55%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 25 75% 55%;
+    --primary-foreground: 20 20% 7%;
 
-    --secondary: 20 25% 18%;
-    --secondary-foreground: 35 30% 90%;
+    --secondary: 20 15% 15%;
+    --secondary-foreground: 30 20% 85%;
 
-    --muted: 20 20% 16%;
-    --muted-foreground: 30 20% 60%;
+    --muted: 20 12% 14%;
+    --muted-foreground: 25 15% 55%;
 
-    --accent: 15 85% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 18 65% 50%;
+    --accent-foreground: 20 20% 7%;
 
-    --destructive: 0 70% 45%;
+    --destructive: 0 55% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 20 20% 20%;
-    --input: 20 20% 20%;
-    --ring: 25 90% 55%;
+    --border: 20 12% 18%;
+    --input: 20 12% 16%;
+    --ring: 25 75% 55%;
 
-    --sidebar-background: 20 25% 10%;
-    --sidebar-foreground: 35 30% 92%;
-    --sidebar-primary: 25 90% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 20 20% 16%;
-    --sidebar-accent-foreground: 35 30% 90%;
-    --sidebar-border: 20 15% 18%;
-    --sidebar-ring: 25 90% 55%;
+    --sidebar-background: 20 18% 9%;
+    --sidebar-foreground: 30 20% 88%;
+    --sidebar-primary: 25 75% 55%;
+    --sidebar-primary-foreground: 20 20% 7%;
+    --sidebar-accent: 20 12% 14%;
+    --sidebar-accent-foreground: 30 20% 85%;
+    --sidebar-border: 20 10% 16%;
+    --sidebar-ring: 25 75% 55%;
   }
 }
 
@@ -103,6 +103,29 @@
 
 .bg-warm-soft {
   background: linear-gradient(180deg, hsl(40 45% 96%), hsl(35 40% 98%));
+}
+
+/* Heartbeat animation */
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.15);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.1);
+  }
+  70% {
+    transform: scale(1);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
 }
 
 /* Custom scrollbar */

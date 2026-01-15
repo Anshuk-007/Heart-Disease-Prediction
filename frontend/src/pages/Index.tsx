@@ -1,14 +1,47 @@
-import { Heart, Activity, Shield, Brain } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Heart, Activity, Shield, Brain, Moon, Sun } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import HeartPredictionForm from '@/components/HeartPredictionForm';
 
 const Index = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    setIsDark(isDarkMode);
+    document.documentElement.classList.toggle('dark', isDarkMode);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = !isDark;
+    setIsDark(newTheme);
+    document.documentElement.classList.toggle('dark', newTheme);
+    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-background transition-colors duration-300">
+      {/* Theme Toggle */}
+      <div className="fixed top-4 right-4 z-50">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggleTheme}
+          className="rounded-full bg-card/80 backdrop-blur-sm border-border/50 hover:bg-card"
+        >
+          {isDark ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
+        </Button>
+      </div>
+
       {/* Hero Section */}
       <header className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/5 to-primary/10" />
         <div className="container mx-auto px-4 py-12 md:py-20 relative">
           <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/15 mb-6">
+              <Heart className="w-8 h-8 text-primary animate-heartbeat" fill="currentColor" />
+            </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <Heart className="w-4 h-4" />
               AI-Powered Health Assessment
